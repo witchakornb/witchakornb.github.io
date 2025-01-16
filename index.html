@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Witchakorn Boonprakom - Back-End Developer</title>
+  <style>
+    :root {
+      --primary-color: #007BFF;
+      --secondary-color: #20C997;
+      --background-color: #F8F9FA;
+      --text-color: #212529;
+      --card-background: #FFFFFF;
+      --border-color: #DEE2E6;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    .card {
+      background: var(--card-background);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 8px var(--shadow-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px var(--shadow-color);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--primary-color);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      background: var(--primary-color);
+      color: white;
+      padding: 1rem 0;
+      margin-top: 2rem;
+    }
+
+    footer p {
+      font-size: 0.875rem;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    ul li a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: var(--secondary-color);
+      color: white;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    ul li a:hover {
+      background-color: var(--primary-color);
+    }
+
+    #contact ul li a {
+      background-color: var(--primary-color);
+      font-weight: normal;
+    }
+
+    #contact ul li a:hover {
+      background-color: var(--secondary-color);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      justify-items: center;
+    }
+  
+    .contact-card {
+      background-color: var(--card-background);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 4px var(--shadow-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      max-width: 200px;
+    }
+  
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px var(--shadow-color);
+    }
+  
+    .contact-card img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 0.5rem;
+    }
+  
+    .contact-card a {
+      display: block;
+      color: var(--primary-color);
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 0.5rem;
+    }
+  
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    .community-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 600px;
+    margin: 1.5rem auto;
+  }
+
+  .community-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+  }
+
+  .community-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .community-card p {
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+  </style>
+  
+</head>
+<body>
+  <header>
+    <h1>Witchakorn Boonprakom</h1>
+    <p>Dedicated and passionate Back-End Developer</p>
+  </header>
+
+  <div class="container">
+    <!-- About Section -->
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <p>
+        I am a back-end developer with experience in building efficient and scalable systems using Go, Java, and Python. I specialize in frameworks like Spring Boot and tools such as MySQL and Docker. My passion lies in solving real-world challenges with innovative solutions, while continually improving my skills and teamwork capabilities.
+      </p>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2 class="section-title">Notable Projects</h2>
+
+      <div class="card">
+        <h3>Smart Price Comparator</h3>
+        <p>
+          A tool for comparing product prices to help users find the best value. It ensures results are displayed in the order entered for user clarity.
+        </p>
+        <a href="https://witchakornb.github.io/Smart-Price-Comparator" target="_blank">Try it Online</a>
+      </div>
+
+      <div class="card">
+        <h3>24 Game Solver</h3>
+        <p>
+          An application that solves the 24 Game by calculating possible ways to reach 24 using four given numbers, providing instant results.
+        </p>
+        <a href="https://witchakornb.github.io/24-game-solver/" target="_blank">Try it Online</a>
+      </div>
+
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+      <h2 class="section-title">Achievements</h2>
+
+      <div class="card">
+        <h3>1st Place - Thailand Health AI Datathon 2023</h3>
+        <p>
+          Analyzed over 100,000 medical cases using AI to uncover critical insights, advancing healthcare decision-making.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>ICPC National Round Participant</h3>
+        <p>
+          Demonstrated advanced algorithmic problem-solving skills under competitive pressure.
+        </p>
+      </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community">
+        <h2 class="section-title">Community Involvement</h2>
+        <div class="community-card">
+          <img src="https://www.gdscfau.com/static/media/logo.ade0843b66593af62121.png" alt="GDSC Logo">
+          <p>
+            As a member of the Google Developer Student Club, I actively explore new technologies and collaborate on impactful projects, enhancing both technical expertise and teamwork.
+          </p>
+        </div>
+      </section>
+      
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <p>Feel free to connect with me through these platforms:</p>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <img src="https://img.icons8.com/color/48/000000/medium.png" alt="Medium">
+            <a href="https://medium.com/@witchakorn.bo" target="_blank">Medium</a>
+          </div>
+          <div class="contact-card">
+            <img src="https://img.icons8.com/color/48/000000/github.png" alt="GitHub">
+            <a href="https://github.com/witchakornb" target="_blank">GitHub</a>
+          </div>
+          <div class="contact-card">
+            <img src="https://img.icons8.com/color/48/000000/gitlab.png" alt="GitLab">
+            <a href="https://gitlab.com/witchakornb" target="_blank">GitLab</a>
+          </div>
+          <div class="contact-card">
+            <img src="https://img.icons8.com/color/48/000000/email.png" alt="Email">
+            <a href="mailto:witchakorn.b@kkumail.com">Email Me</a>
+          </div>
+          <div class="contact-card">
+            <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn">
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+      
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Witchakorn Boonprakom. All rights reserved.</p>
+  </footer>
+</body>
+</html>
