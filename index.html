@@ -1,321 +1,667 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Witchakorn Boonprakom - Back-End Developer</title>
-  <style>
-    :root {
-      --primary-color: #007BFF;
-      --secondary-color: #20C997;
-      --background-color: #F8F9FA;
-      --text-color: #212529;
-      --card-background: #FFFFFF;
-      --border-color: #DEE2E6;
-      --shadow-color: rgba(0, 0, 0, 0.1);
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Witchakorn Boonprakom - Computer Science Student</title>
+    <style>
+      :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9ff;
+        --text-primary: #1a1f36;
+        --text-secondary: #4a5568;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+        --success: #10b981;
+        --gradient: linear-gradient(135deg, #2563eb, #3b82f6);
+      }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-    }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont,
+          sans-serif;
+      }
 
-    body {
-      background-color: var(--background-color);
-      color: var(--text-color);
-      line-height: 1.6;
-    }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px;
+      }
 
-    header {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      color: white;
-      padding: 3rem 1rem;
-      text-align: center;
-    }
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.7;
+      }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
+      .nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
 
-    header p {
-      font-size: 1.25rem;
-      margin-top: 0.5rem;
-    }
+      .nav.scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
 
-    .container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
+      .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+      }
 
-    .section-title {
-      font-size: 2rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      text-align: center;
-    }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
 
-    section {
-      margin-bottom: 2.5rem;
-    }
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+        padding: 0.5rem 0;
+      }
 
-    .card {
-      background: var(--card-background);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 8px var(--shadow-color);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient);
+        transition: width 0.3s ease;
+      }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px var(--shadow-color);
-    }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
 
-    .card h3 {
-      font-size: 1.5rem;
-      color: var(--secondary-color);
-      margin-bottom: 0.5rem;
-    }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
 
-    .card p {
-      font-size: 1rem;
-      color: var(--text-color);
-      margin-bottom: 1rem;
-    }
+      .hero {
+        padding: 12rem 1rem 8rem;
+        background: var(--bg-secondary);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
 
-    a {
-      color: var(--primary-color);
-      font-weight: bold;
-      text-decoration: none;
-    }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(37, 99, 235, 0.1),
+          rgba(59, 130, 246, 0.1)
+        );
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+      }
 
-    a:hover {
-      text-decoration: underline;
-    }
+      .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+      }
 
-    footer {
-      text-align: center;
-      background: var(--primary-color);
-      color: white;
-      padding: 1rem 0;
-      margin-top: 2rem;
-    }
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.2;
+      }
 
-    footer p {
-      font-size: 0.875rem;
-    }
+      .hero p {
+        font-size: 1.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
+      .section {
+        padding: 6rem 0;
+      }
 
-    ul li {
-      margin-bottom: 0.5rem;
-    }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
 
-    ul li a {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background-color: var(--secondary-color);
-      color: white;
-      border-radius: 5px;
-      transition: background 0.3s ease;
-    }
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        text-align: center;
+        position: relative;
+      }
 
-    ul li a:hover {
-      background-color: var(--primary-color);
-    }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: var(--gradient);
+        border-radius: 2px;
+      }
 
-    #contact ul li a {
-      background-color: var(--primary-color);
-      font-weight: normal;
-    }
+      .card {
+        background: var(--bg-primary);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+      }
 
-    #contact ul li a:hover {
-      background-color: var(--secondary-color);
-    }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-      justify-items: center;
-    }
-  
-    .contact-card {
-      background-color: var(--card-background);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 2px 4px var(--shadow-color);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      width: 100%;
-      max-width: 200px;
-    }
-  
-    .contact-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 8px var(--shadow-color);
-    }
-  
-    .contact-card img {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 0.5rem;
-    }
-  
-    .contact-card a {
-      display: block;
-      color: var(--primary-color);
-      font-size: 1rem;
-      font-weight: bold;
-      text-decoration: none;
-      margin-top: 0.5rem;
-    }
-  
-    .contact-card a:hover {
-      text-decoration: underline;
-    }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
 
-    .community-card {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: 0 2px 4px var(--shadow-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-width: 600px;
-    margin: 1.5rem auto;
-  }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
 
-  .community-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px var(--shadow-color);
-  }
+      .skill-item {
+        background: var(--bg-secondary);
+        padding: 1.5rem;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border);
+      }
 
-  .community-card img {
-    width: 100px;
-    height: auto;
-    margin-bottom: 1rem;
-  }
+      .skill-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        background: var(--bg-primary);
+      }
 
-  .community-card p {
-    font-size: 1rem;
-    color: var(--text-color);
-    line-height: 1.5;
-  }
-  </style>
-  
-</head>
-<body>
-  <header>
-    <h1>Witchakorn Boonprakom</h1>
-    <p>Dedicated and passionate Back-End Developer</p>
-  </header>
+      .skill-level {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--success);
+        font-weight: 600;
+      }
 
-  <div class="container">
-    <!-- About Section -->
-    <section id="about">
-      <h2 class="section-title">About Me</h2>
-      <p>
-        I am a back-end developer with experience in building efficient and scalable systems using Go, Java, and Python. I specialize in frameworks like Spring Boot and tools such as MySQL and Docker. My passion lies in solving real-world challenges with innovative solutions, while continually improving my skills and teamwork capabilities.
-      </p>
+      .contact-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .contact-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .social-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .social-card {
+        background: var(--bg-primary);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+      }
+
+      .social-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: var(--gradient);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+      }
+
+      footer {
+        background: var(--bg-secondary);
+        padding: 3rem 1rem;
+        text-align: center;
+        color: var(--text-secondary);
+        margin-top: 4rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .container {
+          padding: 0 1.5rem;
+        }
+      }
+
+      /* Mobile Menu */
+      .menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-primary);
+      }
+
+      @media (max-width: 768px) {
+        .menu-btn {
+          display: block;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: 0;
+          right: 0;
+          background: var(--bg-primary);
+          padding: 2rem;
+          flex-direction: column;
+          text-align: center;
+          transform: translateY(-100%);
+          transition: transform 0.3s ease;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links.active {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-content">
+        <button class="menu-btn">☰</button>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#education">Education</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+          <a href="#competitions">Competitions</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      <div class="nav-content">
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#education">Education</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+          <a href="#competitions">Competitions</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Witchakorn Boonprakom</h1>
+        <p>Computer Science Student | Back-End Developer</p>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-      <h2 class="section-title">Live Projects</h2>
-
-      <div class="card">
-        <h3>Smart Price Comparator</h3>
-        <p>
-          A tool for comparing product prices to help users find the best value. It ensures results are displayed in the order entered for user clarity.
-        </p>
-        <a href="https://witchakornb.github.io/Smart-Price-Comparator" target="_blank">Try it Online</a>
-      </div>
-
-      <div class="card">
-        <h3>24 Game Solver</h3>
-        <p>
-          An application that solves the 24 Game by calculating possible ways to reach 24 using four given numbers, providing instant results.
-        </p>
-        <a href="https://witchakornb.github.io/24-game-solver/" target="_blank">Try it Online</a>
-      </div>
-
-    </section>
-
-    <!-- Achievements Section -->
-    <section id="achievements">
-      <h2 class="section-title">Achievements</h2>
-
-      <div class="card">
-        <h3>1st Place - Thailand Health AI Datathon 2023</h3>
-        <p>
-          Analyzed over 100,000 medical cases using AI to uncover critical insights, advancing healthcare decision-making.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>ICPC National Round Participant</h3>
-        <p>
-          Demonstrated advanced algorithmic problem-solving skills under competitive pressure.
-        </p>
-      </div>
-    </section>
-
-    <!-- Community Section -->
-    <section id="community">
-        <h2 class="section-title">Community Involvement</h2>
-        <div class="community-card">
-          <img src="https://www.gdscfau.com/static/media/logo.ade0843b66593af62121.png" alt="GDSC Logo">
+    <div class="container">
+      <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="card">
           <p>
-            As a member of the Google Developer Student Club, I actively explore new technologies and collaborate on impactful projects, enhancing both technical expertise and teamwork.
+            Hello, I'm Witchakorn Boonprakom. Currently, I'm studying Computer
+            Science at Khon Kaen University. I am interested in developing
+            efficient and scalable back-end systems. My expertise includes
+            back-end technologies such as Go, Python, and Java, along with
+            proficiency in cloud-based tools. I am dedicated to developing
+            solutions that address real-world challenges, with a passion for
+            improving back-end systems and delivering innovative software
+            solutions.
           </p>
         </div>
       </section>
-      
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2 class="section-title">Contact</h2>
-        <p>Feel free to connect with me through these platforms:</p>
-        <div class="contact-grid">
-          <div class="contact-card">
-            <img src="https://img.icons8.com/color/48/000000/medium.png" alt="Medium">
-            <a href="https://medium.com/@witchakorn.bo" target="_blank">Medium</a>
+      <section id="education">
+        <h2 class="section-title">Education</h2>
+        <div class="card">
+          <h3>Bachelor of Science (Computer Science)</h3>
+          <p class="experience-date">2022 – Present</p>
+          <p>College of Computing, Khon Kaen University</p>
+        </div>
+      </section>
+
+      <section id="experience">
+        <h2 class="section-title">Experience</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Teaching Assistant</h3>
+            <p class="experience-date">June 2023 - Present</p>
+            <p>Khon Kaen University</p>
+            <ul style="margin-left: 1.5rem">
+              <li>Assisted in teaching Natural Language Processing</li>
+              <li>Artificial Intelligence</li>
+              <li>Programming for Machine Learning</li>
+              <li>Fundamental Computer Science</li>
+            </ul>
           </div>
-          <div class="contact-card">
-            <img src="https://img.icons8.com/color/48/000000/github.png" alt="GitHub">
-            <a href="https://github.com/witchakornb" target="_blank">GitHub</a>
-          </div>
-          <div class="contact-card">
-            <img src="https://img.icons8.com/color/48/000000/gitlab.png" alt="GitLab">
-            <a href="https://gitlab.com/witchakornb" target="_blank">GitLab</a>
-          </div>
-          <div class="contact-card">
-            <img src="https://img.icons8.com/color/48/000000/email.png" alt="Email">
-            <a href="mailto:witchakorn.b@kkumail.com">Email Me</a>
-          </div>
-          <div class="contact-card">
-            <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn">
-            <a href="https://www.linkedin.com/in/witchakorn-boonprakom">LinkedIn</a>
+          <div class="card">
+            <h3>Google Developer Student Clubs</h3>
+            <p class="experience-date">Feb 2023 - May 2024</p>
+            <p>Khon Kaen University</p>
+            <p>
+              Shared knowledge on various tech-related topics through blogs,
+              making technology more accessible to people beyond those in
+              tech-related fields.
+            </p>
           </div>
         </div>
       </section>
-      
-  </div>
 
-  <footer>
-    <p>&copy; 2025 Witchakorn Boonprakom. All rights reserved.</p>
-  </footer>
-</body>
+      <section id="live-projects" class="section">
+        <div class="container">
+          <h2 class="section-title">Live Projects</h2>
+          <div class="grid">
+            <div class="project-card">
+              <h3>Smart Price Comparator</h3>
+              <p>
+                A tool for comparing product prices to help users find the best
+                value. It ensures results are displayed in the order entered for
+                user clarity.
+              </p>
+              <a
+                href="https://witchakornb.github.io/Smart-Price-Comparator"
+                class="button"
+                target="_blank"
+                >Try it Online</a
+              >
+            </div>
+
+            <div class="project-card">
+              <h3>24 Game Solver</h3>
+              <p>
+                An application that solves the 24 Game by calculating possible
+                ways to reach 24 using four given numbers, providing instant
+                results.
+              </p>
+              <a
+                href="https://witchakornb.github.io/24-game-solver/"
+                class="button"
+                target="_blank"
+                >Try it Online</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="competitions">
+        <h2 class="section-title">Competitions</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>THAILAND HEALTH AI CONFERENCE & DATATHON 2023</h3>
+            <p class="experience-date">
+              4th–6th Oct. 2023 | Khon Kaen University
+            </p>
+            <p><strong>1st Place Winner</strong></p>
+            <p>
+              Collaborated with Team "Hypertension 2" to analyze over 100,000
+              hypertension cases, identifying blood pressure variation (SD) as a
+              key factor in cardiovascular outcomes using AI and data analysis
+              techniques.
+            </p>
+          </div>
+          <div class="card">
+            <h3>The International Collegiate Programming Contest (ICPC)</h3>
+            <p class="experience-date">
+              7th–8th Sep. 2024 | Chulalongkorn University
+            </p>
+            <p><strong>National Round Participant</strong></p>
+            <p>
+              Participated in the National Round of ICPC competition, enhancing
+              skills in algorithm design, problem-solving, and teamwork under
+              time constraints.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <div class="container">
+          <h2 class="section-title">Technical Skills</h2>
+      
+          <!-- Programming Languages & Frameworks -->
+          <div class="skill-category">
+            <h3 class="skill-title">Programming Languages & Frameworks</h3>
+            <div class="skill-grid">
+              <div class="skill-item">
+                <span>Go (Fiber, gRPC)</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>Python (Flask, FastAPI)</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>Java (JavaFX, SpringBoot)</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>SQL</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>PHP (Laravel)</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-item">
+                <span>JavaScript</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-item">
+                <span>C / C++</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Tools & Platforms -->
+          <div class="skill-category">
+            <h3 class="skill-title">Tools & Platforms</h3>
+            <div class="skill-grid">
+              <div class="skill-item">
+                <span>GitHub</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>Docker</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>Postman</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>Azure</span>
+                <span class="skill-level">Advanced</span>
+              </div>
+              <div class="skill-item">
+                <span>Google Cloud</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+              <div class="skill-item">
+                <span>GitLab</span>
+                <span class="skill-level">Intermediate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="contact">
+        <div class="container">
+          <h2 class="section-title">Contact</h2>
+          <div class="contact-info">
+            <div class="contact-item">
+              <i>📍</i>
+              <a
+                href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B8%9A%E0%B8%B2%E0%B8%A5%E0%B8%99%E0%B8%84%E0%B8%A3%E0%B8%82%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%99+%E0%B8%AD%E0%B8%B3%E0%B9%80%E0%B8%A0%E0%B8%AD%E0%B9%80%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%99+%E0%B8%82%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%99+40000/@16.4438628,102.7376911,12z/data=!3m1!4b1!4m6!3m5!1s0x3122602b91988e2f:0x93f0805cf799cc6!8m2!3d16.432153!4d102.8235572!16zL20vMDFjeWd3?entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                >Mittraphap Road, Nai Mueang, Mueang Khon Kaen, Khon Kaen,
+                40000, Thailand</a
+              >
+            </div>
+            <div class="contact-item">
+              <i>📧</i>
+              <a href="mailto:witchakorn.b@kkumail.com">witchakorn.b@kkumail.com</a>
+            </div>
+            <div class="contact-item">
+              <i>📱</i>
+              <a href="tel:+66922561042">092-256-1042</a>
+            </div>
+          </div>
+      
+          <!-- Social Links -->
+          <div class="social-grid">
+            <div class="social-card">
+              <img
+                src="https://img.icons8.com/color/48/000000/medium.png"
+                alt="Medium"
+              />
+              <a href="https://medium.com/@witchakorn.bo" target="_blank"></a>
+            </div>
+            <div class="social-card">
+              <img
+                src="https://img.icons8.com/color/48/000000/github.png"
+                alt="GitHub"
+              />
+              <a href="https://github.com/witchakornb" target="_blank"></a>
+            </div>
+            <div class="social-card">
+              <img
+                src="https://img.icons8.com/color/48/000000/gitlab.png"
+                alt="GitLab"
+              />
+              <a href="https://gitlab.com/witchakornb" target="_blank"></a>
+            </div>
+            <div class="social-card">
+              <img
+                src="https://img.icons8.com/color/48/000000/linkedin.png"
+                alt="LinkedIn"
+              />
+              <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank"></a>
+            </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Witchakorn Boonprakom. All rights reserved.</p>
+    </footer>
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        const nav = document.querySelector(".nav");
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+
+      // Mobile menu toggle
+      const menuBtn = document.querySelector(".menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("active");
+        });
+      });
+
+      // Smooth scroll for internal links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
