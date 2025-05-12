@@ -1,240 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Witchakorn Boonprakom - Portfolio</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-
+      :root {
+        --scroll-behavior: smooth; /* Fallback for html class */
+      }
       * {
         font-family: "Inter", sans-serif;
-        scroll-behavior: smooth;
+        scroll-behavior: var(--scroll-behavior); /* Use CSS variable */
       }
-
       .gradient-text {
-        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 70%, #5eead4 100%); /* Adjusted gradient */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-
       .gradient-bg {
         background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
       }
-
+      .gradient-bg-hover:hover {
+        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%); /* Darker on hover */
+      }
       .card-hover {
-        transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out;
       }
-
       .card-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 35px rgba(37, 99, 235, 0.15); /* Enhanced shadow */
       }
-
-      .skill-badge {
-        background: rgba(37, 99, 235, 0.1);
-        color: #2563eb;
-        padding: 0.5rem 1rem;
+      .skill-badge { /* Re-evaluate if this is needed or can be done with pure Tailwind */
+        background: rgba(59, 130, 246, 0.1); /* Blue-200 equivalent */
+        color: #2563eb; /* Blue-600 */
+        padding: 0.375rem 0.875rem; /* Adjusted padding */
         border-radius: 9999px;
-        font-size: 0.875rem;
+        font-size: 0.8rem; /* Slightly smaller */
         font-weight: 500;
         transition: all 0.3s ease;
+        display: inline-block;
       }
-
       .skill-badge:hover {
         background: #2563eb;
         color: white;
       }
-
       .nav-link {
         position: relative;
+        padding-bottom: 4px; /* Space for underline */
       }
-
       .nav-link::after {
         content: "";
         position: absolute;
-        bottom: -2px;
+        bottom: 0;
         left: 0;
         width: 0;
         height: 2px;
         background: #2563eb;
         transition: width 0.3s ease;
       }
-
-      .nav-link:hover::after {
+      .nav-link:hover::after,
+      .nav-link.active::after { /* Style for active link */
         width: 100%;
       }
-
       .hero-pattern {
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        background-attachment: fixed; /* Optional: makes pattern stay fixed on scroll */
       }
-
-      .social-link {
-        transition: all 0.3s ease;
+      .social-link-hover {
+        transition: transform 0.3s ease, color 0.3s ease;
       }
-
-      .social-link:hover {
+      .social-link-hover:hover {
         transform: translateY(-3px);
+        /* color: #2563eb; Tailwind hover text color will handle this */
       }
-
-      .mobile-menu {
-        transition: all 0.3s ease;
+      .mobile-menu-transition {
+        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
       }
     </style>
   </head>
 
-  <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav
-      class="fixed top-0 w-full bg-white/90 backdrop-blur-lg border-b border-gray-200 z-50"
-    >
+  <body class="bg-gray-100 text-gray-800 antialiased">
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-200/80 z-50 transition-shadow duration-300" id="main-nav">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
-          <a href="#" class="text-xl font-bold gradient-text">WB</a>
+          <a href="#" class="text-2xl font-bold gradient-text tracking-tight">WB</a>
 
-          <!-- Desktop Menu -->
-          <div class="hidden md:flex space-x-8">
-            <a
-              href="#about"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >About</a
-            >
-            <a
-              href="#experience"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >Experience</a
-            >
-            <a
-              href="#competitions"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >Competitions</a
-            >
-            <a
-              href="#projects"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >Projects</a
-            >
-            <a
-              href="#Certifications"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >Certifications</a
-            >
-            <a
-              href="#skills"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >Skills</a
-            >
-            <a
-              href="#contact"
-              class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
-              >Contact</a
-            >
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="#about" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">About</a>
+            <a href="#experience" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Experience</a>
+            <a href="#competitions" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Competitions</a>
+            <a href="#projects" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Projects</a>
+            <a href="#certifications" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Certifications</a>
+            <a href="#skills" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Skills</a>
+            <a href="#contact" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Contact</a>
           </div>
 
-          <!-- Mobile Menu Button -->
-          <button class="md:hidden text-gray-600" id="mobile-menu-button">
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+          <button class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none" id="mobile-menu-button" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-6 h-6 block" id="icon-menu" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg class="w-6 h-6 hidden" id="icon-close" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
       </div>
 
-      <!-- Mobile Menu -->
-      <div class="hidden md:hidden" id="mobile-menu">
-        <div
-          class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-lg border-b border-gray-200"
-        >
-          <a
-            href="#about"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >About</a
-          >
-          <a
-            href="#experience"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >Experience</a
-          >
-          <a
-            href="#competitions"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >Competitions</a
-          >
-          <a
-            href="#projects"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >Projects</a
-          >
-          <a
-            href="#Certifications"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >Projects</a
-          >
-          <a
-            href="#skills"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >Skills</a
-          >
-          <a
-            href="#contact"
-            class="block px-3 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
-            >Contact</a
-          >
+      <div class="hidden md:hidden mobile-menu-transition max-h-0 opacity-0 overflow-hidden" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-b border-gray-200 shadow-lg">
+          <a href="#about" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">About</a>
+          <a href="#experience" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Experience</a>
+          <a href="#competitions" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Competitions</a>
+          <a href="#projects" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Projects</a>
+          <a href="#certifications" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Certifications</a>
+          <a href="#skills" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Skills</a>
+          <a href="#contact" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Contact</a>
         </div>
       </div>
     </nav>
-    <!-- Hero Section -->
-    <section class="pt-32 pb-24 hero-pattern">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+    <section class="pt-32 pb-20 md:pt-40 md:pb-28 hero-pattern bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="mb-8">
           <img
             src="./images/witchakorn.jpg"
             alt="Witchakorn Boonprakom"
-            class="w-32 h-32 rounded-full mx-auto border-4 border-blue-500 shadow-lg"
+            class="w-36 h-36 md:w-40 md:h-40 rounded-full mx-auto border-4 border-white shadow-xl"
+            loading="eager" 
           />
         </div>
-        <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-6">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold gradient-text mb-5 tracking-tight">
           Witchakorn Boonprakom
         </h1>
-        <p class="text-xl md:text-2xl text-gray-600 mb-12">
-          Computer Science Student | Back-End Developer
+        <p class="text-lg md:text-xl text-gray-700 mb-10 max-w-2xl mx-auto leading-relaxed">
+          Computer Science Student at Khon Kaen University | Passionate Back-End Developer
         </p>
-        <div class="flex justify-center space-x-4">
+        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-5">
           <a
             href="#contact"
-            class="gradient-bg text-white px-8 py-3 rounded-full hover:shadow-lg transition-all"
+            class="gradient-bg gradient-bg-hover text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5"
           >
-            Contact Me
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884zM18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" clip-rule="evenodd" /></svg>
+            <span>Contact Me</span>
           </a>
           <a
             href="#projects"
-            class="bg-white text-blue-600 px-8 py-3 rounded-full border border-blue-600 hover:bg-blue-50 transition-all"
+            class="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-blue-500 hover:bg-blue-50 hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5"
           >
-            View Projects
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4zm2 0h1V9h-1v2zm1-4V5h-1v2h1zM5 5v2H4V5h1zm0 4H4v2h1V9zm-1 4h1v2H4v-2z" clip-rule="evenodd"/> </svg>
+            <span>View Projects</span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-white">
+    <section id="about" class="py-20 md:py-24 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          About Me
-        </h2>
-        <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
-          <p class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">About Me</h2>
+        </header>
+        <div class="space-y-8 text-gray-700 text-lg leading-relaxed">
+          <p class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-sm">
             I'm Witchakorn Boonprakom, a Computer Science student at Khon Kaen
             University specializing in back-end development. My expertise
             includes Go, Python, and Java, with hands-on experience in Spring
@@ -242,93 +173,37 @@
             like Azure and Google Cloud to build more scalable solutions.
           </p>
 
-          <div class="grid md:grid-cols-2 gap-6 mt-8">
-            <div
-              class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <h3 class="text-xl font-semibold mb-3 text-blue-600">
-                Key Projects
-              </h3>
-              <ul class="space-y-2">
+          <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 mt-10">
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+              <h3 class="text-xl font-semibold mb-4 text-blue-700">Key Projects</h3>
+              <ul class="space-y-3 text-gray-600">
                 <li class="flex items-start">
-                  <svg
-                    class="w-5 h-5 text-blue-500 mr-2 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <svg class="w-5 h-5 text-blue-500 mr-2.5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/> </svg>
                   Fertilizer Store Management System
                 </li>
                 <li class="flex items-start">
-                  <svg
-                    class="w-5 h-5 text-blue-500 mr-2 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <svg class="w-5 h-5 text-blue-500 mr-2.5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/> </svg>
                   Real-Time Chat Application
                 </li>
               </ul>
             </div>
 
-            <div
-              class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <h3 class="text-xl font-semibold mb-3 text-blue-600">
-                Achievements
-              </h3>
-              <ul class="space-y-2">
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+              <h3 class="text-xl font-semibold mb-4 text-blue-700">Achievements</h3>
+              <ul class="space-y-3 text-gray-600">
                 <li class="flex items-start">
-                  <svg
-                    class="w-5 h-5 text-yellow-500 mr-2 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                    />
-                  </svg>
+                  <svg class="w-5 h-5 text-yellow-500 mr-2.5 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"> <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/> </svg>
                   1st Place - Thailand Health AI Datathon 2023
                 </li>
                 <li class="flex items-start">
-                  <svg
-                    class="w-5 h-5 text-blue-500 mr-2 mt-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                    />
-                  </svg>
+                  <svg class="w-5 h-5 text-blue-500 mr-2.5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/> </svg>
                   ICPC National Round Participant
                 </li>
               </ul>
             </div>
           </div>
 
-          <p class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+          <p class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm">
             As an active member of the Google Developer Student Club, I'm
             committed to continuous learning and sharing knowledge with the tech
             community. I focus on exploring emerging technologies and
@@ -338,77 +213,56 @@
       </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-24 bg-gray-50">
+    <section id="experience" class="py-20 md:py-24 bg-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Experience
-        </h2>
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Experience</h2>
+        </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-white p-8 rounded-xl shadow-sm card-hover">
-            <h3 class="text-xl font-semibold mb-4">Teacher Assistant</h3>
-            <p class="text-gray-600 mb-4">June 2023 - Present</p>
-            <p class="text-gray-600">Khon Kaen University</p>
-            <ul class="mt-4 space-y-2 text-gray-600">
-              <li>• Natural Language Processing</li>
-              <li>• Artificial Intelligence</li>
-              <li>• Programming for Machine Learning</li>
-              <li>• Fundamental Computer Science</li>
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+            <h3 class="text-xl font-semibold text-blue-700 mb-1">Teacher Assistant</h3>
+            <p class="text-sm text-gray-500 mb-3">June 2023 - Present  |  Khon Kaen University</p>
+            <p class="text-gray-700 mb-4">Supported instructors and students in various Computer Science courses:</p>
+            <ul class="mt-2 space-y-1.5 text-gray-600 list-disc list-inside">
+              <li>Natural Language Processing</li>
+              <li>Artificial Intelligence</li>
+              <li>Programming for Machine Learning</li>
+              <li>Fundamental Computer Science</li>
             </ul>
           </div>
-          <div class="bg-white p-8 rounded-xl shadow-sm card-hover">
-            <h3 class="text-xl font-semibold mb-4">
-              Google Developer Student Clubs
-            </h3>
-            <p class="text-gray-600 mb-4">Feb 2023 - May 2024</p>
-            <p class="text-gray-600">Khon Kaen University</p>
-            <p class="mt-4 text-gray-600">
-              Shared knowledge on various tech-related topics through blogs,
-              making technology more accessible to people beyond those in
-              tech-related fields.
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+            <h3 class="text-xl font-semibold text-blue-700 mb-1">Google Developer Student Clubs</h3>
+            <p class="text-sm text-gray-500 mb-3">Feb 2023 - May 2024  |  Khon Kaen University</p>
+            <p class="text-gray-700">
+              Actively contributed to the tech community by creating and sharing knowledge on various tech-related topics through blog posts and workshops, aiming to make technology more accessible.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Competitions Section -->
-    <section id="competitions" class="py-24 bg-white">
+    <section id="competitions" class="py-20 md:py-24 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Competitions
-        </h2>
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Competitions</h2>
+        </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <h3 class="text-xl font-semibold mb-4 text-blue-600">
-              THAILAND HEALTH AI CONFERENCE & DATATHON 2023
-            </h3>
-            <p class="text-gray-600 mb-2">
-              4th–6th Oct. 2023 | Khon Kaen University
-            </p>
-            <p class="font-semibold text-green-600 mb-4">1st Place Winner</p>
-            <p class="text-gray-600">
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+            <h3 class="text-xl font-semibold text-blue-700 mb-1">THAILAND HEALTH AI CONFERENCE & DATATHON 2023</h3>
+            <p class="text-sm text-gray-500 mb-2">4th–6th Oct. 2023 | Khon Kaen University</p>
+            <p class="font-semibold text-green-600 text-lg mb-3">1st Place Winner</p>
+            <p class="text-gray-700">
               Collaborated with Team "Hypertension 2" to analyze over 100,000
               hypertension cases, identifying blood pressure variation (SD) as a
               key factor in cardiovascular outcomes using AI and data analysis
               techniques.
             </p>
           </div>
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <h3 class="text-xl font-semibold mb-4 text-blue-600">
-              The International Collegiate Programming Contest (ICPC)
-            </h3>
-            <p class="text-gray-600 mb-2">
-              7th–8th Sep. 2024 | Chulalongkorn University
-            </p>
-            <p class="font-semibold text-blue-600 mb-4">
-              National Round Participant
-            </p>
-            <p class="text-gray-600">
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+            <h3 class="text-xl font-semibold text-blue-700 mb-1">The International Collegiate Programming Contest (ICPC)</h3>
+            <p class="text-sm text-gray-500 mb-2">7th–8th Sep. 2024 | Chulalongkorn University</p>
+            <p class="font-semibold text-blue-600 text-lg mb-3">National Round Participant</p>
+            <p class="text-gray-700">
               Participated in the National Round of ICPC competition, enhancing
               skills in algorithm design, problem-solving, and teamwork under
               time constraints.
@@ -418,47 +272,39 @@
       </div>
     </section>
 
-    <!--Live Projects Section -->
-    <section id="projects" class="py-24 bg-gray-50">
+    <section id="live-projects" class="py-20 md:py-24 bg-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Live Projects
-        </h2>
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Live Projects</h2>
+            <p class="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">Interactive tools I've built. Try them out!</p>
+        </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <h3 class="text-xl font-semibold mb-4 text-blue-600">
-              Smart Price Comparator
-            </h3>
-            <p class="text-gray-600 mb-6">
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200 flex flex-col">
+            <h3 class="text-xl font-semibold text-blue-700 mb-2">Smart Price Comparator</h3>
+            <p class="text-gray-700 mb-6 flex-grow">
               A tool for comparing product prices to help users find the best
               value. It ensures results are displayed in the order entered for
               user clarity.
             </p>
             <a
               href="https://witchakornb.github.io/Smart-Price-Comparator"
-              target="_blank"
-              class="inline-block gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition-all"
+              target="_blank" rel="noopener noreferrer"
+              class="mt-auto inline-block text-center gradient-bg gradient-bg-hover text-white px-6 py-2.5 rounded-lg font-medium hover:shadow-md transition-all"
             >
               Try it Online
             </a>
           </div>
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <h3 class="text-xl font-semibold mb-4 text-blue-600">
-              24 Game Solver
-            </h3>
-            <p class="text-gray-600 mb-6">
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200 flex flex-col">
+            <h3 class="text-xl font-semibold text-blue-700 mb-2">24 Game Solver</h3>
+            <p class="text-gray-700 mb-6 flex-grow">
               An application that solves the 24 Game by calculating possible
               ways to reach 24 using four given numbers, providing instant
               results.
             </p>
             <a
               href="https://witchakornb.github.io/24-game-solver/"
-              target="_blank"
-              class="inline-block gradient-bg text-white px-6 py-2 rounded-full hover:shadow-lg transition-all"
+              target="_blank" rel="noopener noreferrer"
+              class="mt-auto inline-block text-center gradient-bg gradient-bg-hover text-white px-6 py-2.5 rounded-lg font-medium hover:shadow-md transition-all"
             >
               Try it Online
             </a>
@@ -467,767 +313,305 @@
       </div>
     </section>
 
-    <!-- Projects Section -->
-    <section class="py-24 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Projects
-        </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Student Attendance -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Student Attendance
-              </h3>
-              <span class="text-sm text-gray-500">Nov - Nov 2024</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Automated attendance tracking system using Google Apps Script and
-              Sheets.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Apps Script</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Google Sheets</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >JavaScript</span
-              >
-            </div>
-          </div>
+    <section id="projects" class="py-20 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <header class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Projects Showcase</h2>
+                <p class="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">A selection of my technical projects and contributions.</p>
+            </header>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-blue-700">Student Attendance</h3>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md whitespace-nowrap">Nov 2024</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-3">
+                            Automated attendance tracking system using Google Apps Script and Sheets.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-700 px-2.5 py-1 text-xs font-medium rounded-full">Apps Script</span>
+                            <span class="bg-blue-100 text-blue-700 px-2.5 py-1 text-xs font-medium rounded-full">Google Sheets</span>
+                            <span class="bg-blue-100 text-blue-700 px-2.5 py-1 text-xs font-medium rounded-full">JavaScript</span>
+                        </div>
+                    </div>
+                    </div>
 
-          <!-- Focus Space Online -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Focus Space Online
-              </h3>
-              <span class="text-sm text-gray-500">Jul - Sep 2024</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              An online reading platform offering a highly customizable and
-              immersive learning experience with personalized environments,
-              productivity tools, and real-time collaboration.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Next.js</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >WebRTC</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Spring Boot</span
-              >
-            </div>
-            <a
-              href="https://gitlab.com/Project-Software-Design"
-              target="_blank"
-              class="inline-flex items-center text-blue-600 hover:text-blue-700"
-            >
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"
-                />
-              </svg>
-              View on GitLab
-            </a>
-          </div>
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-blue-700">Focus Space Online</h3>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md whitespace-nowrap">Jul - Sep 2024</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-3">
+                            Online reading platform with customizable environments, productivity tools, and real-time collaboration.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-700 px-2.5 py-1 text-xs font-medium rounded-full">Next.js</span>
+                            <span class="bg-blue-100 text-blue-700 px-2.5 py-1 text-xs font-medium rounded-full">WebRTC</span>
+                            <span class="bg-red-100 text-red-700 px-2.5 py-1 text-xs font-medium rounded-full">Spring Boot</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-4 pt-3 bg-gray-50 border-t border-gray-200">
+                         <a href="https://gitlab.com/Project-Software-Design" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                            <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/></svg>
+                            View on GitLab
+                        </a>
+                    </div>
+                </div>
 
-          <!-- Fertilizer Store -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Fertilizer Store System
-              </h3>
-              <span class="text-sm text-gray-500">Nov 2023 - Mar 2024</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Web-based management system for fertilizer store operations,
-              featuring inventory tracking, sales management, and custom formula
-              mixing capabilities.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Next.js</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Go</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >MySQL</span
-              >
-            </div>
-          </div>
+                 <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-blue-700">Fertilizer Store System</h3>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md whitespace-nowrap">Nov 2023 - Mar 2024</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-3">
+                            Web-based management for fertilizer stores: inventory, sales, and custom formula mixing.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-700 px-2.5 py-1 text-xs font-medium rounded-full">Next.js</span>
+                            <span class="bg-teal-100 text-teal-700 px-2.5 py-1 text-xs font-medium rounded-full">Go</span>
+                            <span class="bg-indigo-100 text-indigo-700 px-2.5 py-1 text-xs font-medium rounded-full">MySQL</span>
+                        </div>
+                    </div>
+                </div>
 
-          <!-- Real-Time Chat -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Real-Time Chat
-              </h3>
-              <span class="text-sm text-gray-500">Dec 2023 - Jan 2024</span>
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-blue-700">Real-Time Chat</h3>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md whitespace-nowrap">Dec 2023 - Jan 2024</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-3">
+                            High-performance chat system using gRPC and Protocol Buffers for real-time, concurrent communication.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-100 text-teal-700 px-2.5 py-1 text-xs font-medium rounded-full">Go</span>
+                            <span class="bg-gray-200 text-gray-700 px-2.5 py-1 text-xs font-medium rounded-full">gRPC</span>
+                            <span class="bg-gray-200 text-gray-700 px-2.5 py-1 text-xs font-medium rounded-full">Protobuf</span>
+                        </div>
+                    </div>
+                     <div class="px-6 pb-4 pt-3 bg-gray-50 border-t border-gray-200">
+                        <a href="https://medium.com/@witchakorn.b/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-real-time-chat-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-grpc-%E0%B9%83%E0%B8%99%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2-go-%E0%B8%81%E0%B8%B1%E0%B8%99-97d8197244c2" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                            <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.846 6.887c.03-.295-.083-.586-.303-.784l-2.24-2.7v-.403h6.958l5.378 11.795 4.728-11.795h6.633v.403l-1.916 1.837c-.165.126-.247.333-.213.538v13.498c-.034.204.048.411.213.537l1.871 1.837v.403h-9.412v-.403l1.939-1.882c.19-.19.19-.246.19-.537v-10.91l-5.389 13.688h-.728l-6.275-13.688v9.174c-.052.385.076.774.347 1.052l2.521 3.058v.404h-7.148v-.404l2.521-3.058c.27-.279.39-.67.325-1.052v-10.608z"/></svg>
+                           View on Medium
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-blue-700">Register Management</h3>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md whitespace-nowrap">Jan - Feb 2023</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-3">
+                           Student course registration system with features for checking prerequisites and managing enrollments.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-red-100 text-red-700 px-2.5 py-1 text-xs font-medium rounded-full">Java</span>
+                            <span class="bg-orange-100 text-orange-700 px-2.5 py-1 text-xs font-medium rounded-full">JavaFX</span>
+                            <span class="bg-sky-100 text-sky-700 px-2.5 py-1 text-xs font-medium rounded-full">MariaDB</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-4 pt-3 bg-gray-50 border-t border-gray-200">
+                        <a href="https://github.com/witchakornb/register-application" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                            <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                           View on GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-blue-700">Vehicle Detection System</h3>
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md whitespace-nowrap">Nov 2022 - Feb 2023</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed mb-3">
+                            Real-time motorcycle detection and counting for KKU parking lots using YOLOv8.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-green-100 text-green-700 px-2.5 py-1 text-xs font-medium rounded-full">Python</span>
+                            <span class="bg-yellow-100 text-yellow-700 px-2.5 py-1 text-xs font-medium rounded-full">YOLO</span>
+                            <span class="bg-purple-100 text-purple-700 px-2.5 py-1 text-xs font-medium rounded-full">Object Detection</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-4 pt-3 bg-gray-50 border-t border-gray-200">
+                        <a href="https://github.com/witchakornb/Project_computational_science" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                             <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                           View on GitHub
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p class="text-gray-600 mb-4">
-              High-performance chat system using gRPC and Protocol Buffers for
-              real-time communication and concurrent usage support.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Go</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >gRPC</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Protobuf</span
-              >
-            </div>
-            <a href="https://medium.com/@witchakorn.b/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-real-time-chat-%E0%B8%94%E0%B9%89%E0%B8%A7%E0%B8%A2-grpc-%E0%B9%83%E0%B8%99%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2-go-%E0%B8%81%E0%B8%B1%E0%B8%99-97d8197244c2" 
-            target="_blank" 
-            class="inline-flex items-center text-blue-600 hover:text-blue-700">
-           <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-             <path d="M2.846 6.887c.03-.295-.083-.586-.303-.784l-2.24-2.7v-.403h6.958l5.378 11.795 4.728-11.795h6.633v.403l-1.916 1.837c-.165.126-.247.333-.213.538v13.498c-.034.204.048.411.213.537l1.871 1.837v.403h-9.412v-.403l1.939-1.882c.19-.19.19-.246.19-.537v-10.91l-5.389 13.688h-.728l-6.275-13.688v9.174c-.052.385.076.774.347 1.052l2.521 3.058v.404h-7.148v-.404l2.521-3.058c.27-.279.39-.67.325-1.052v-10.608z"/>
-           </svg>
-           View on Medium
-         </a>
-          </div>
-
-          <!-- Thai News Summarization -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Thai News Summarization
-              </h3>
-              <span class="text-sm text-gray-500">Sep 2023 - Jan 2024</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Automated news summarization using mt5-cpe-kmutt model and Thai
-              Sum dataset.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >NLP</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >LLM</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Python</span
-              >
-            </div>
-          </div>
-
-          <!-- Thai Text-to-Speech -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Thai Text-to-Speech
-              </h3>
-              <span class="text-sm text-gray-500">Jun - Sep 2024</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Natural Thai speech synthesis system replicating target speaker
-              characteristics.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >TTS</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >NLP</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Python</span
-              >
-            </div>
-          </div>
-
-          <!-- Register Management -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Register Management
-              </h3>
-              <span class="text-sm text-gray-500">Jan - Feb 2023</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Student course registration system with features for checking
-              prerequisites, managing enrollments, and viewing classmates.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Java</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >JavaFX</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >MariaDB</span
-              >
-            </div>
-            <a
-              href="https://github.com/witchakornb/register-application"
-              target="_blank"
-              class="inline-flex items-center text-blue-600 hover:text-blue-700"
-            >
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                />
-              </svg>
-              View on GitHub
-            </a>
-          </div>
-
-          <!-- Vehicle Detection -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Vehicle Detection System
-              </h3>
-              <span class="text-sm text-gray-500">Nov 2022 - Feb 2023</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Real-time motorcycle detection and counting application for KKU
-              parking lots using YOLOv8 AI model.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Python</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >YOLO</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Object Detection</span
-              >
-            </div>
-            <a
-              href="https://github.com/witchakornb/Project_computational_science"
-              target="_blank"
-              class="inline-flex items-center text-blue-600 hover:text-blue-700"
-            >
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                />
-              </svg>
-              View on GitHub
-            </a>
-          </div>
-
-          <!-- Bitcoin -->
-          <div
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover"
-          >
-            <div class="flex items-center gap-3 mb-4">
-              <h3 class="text-xl font-semibold text-blue-600">
-                Bitcoin Price Prediction
-              </h3>
-              <span class="text-sm text-gray-500"> Apr 2022 - Jun 2023</span>
-            </div>
-            <p class="text-gray-600 mb-4">
-              Twitter sentiment analysis model to predict Bitcoin price trends
-              using NLP and ML techniques.
-            </p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >Python</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >NLP</span
-              >
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                >AI</span
-              >
-            </div>
-            <a
-              href="https://github.com/witchakornb/Project_computational_science"
-              target="_blank"
-              class="inline-flex items-center text-blue-600 hover:text-blue-700"
-            >
-              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                />
-              </svg>
-              View on GitHub
-            </a>
-          </div>
         </div>
-      </div>
     </section>
 
-    <!-- Certificates Section -->
-    <section id="Certifications" class="py-24 bg-white">
+    <section id="certifications" class="py-20 md:py-24 bg-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Licenses & Certifications
-        </h2>
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Licenses & Certifications</h2>
+        </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <!-- Fortinet Certificate -->
-          <a
-            href="https://www.linkedin.com/in/witchakorn-boonprakom"
-            target="_blank"
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover cursor-pointer"
-          >
+          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-200 block group">
             <div class="flex items-start space-x-4">
-              <img
-                src="./images/logo_fortinet.png"
-                alt="Fortinet"
-                class="w-12 h-12 rounded object-cover object-center"
-              />
+              <img src="./images/logo_fortinet.png" alt="Fortinet Logo" class="w-12 h-12 rounded object-contain flex-shrink-0" loading="lazy"/>
               <div>
-                <h3 class="text-xl font-semibold mb-2">
+                <h3 class="text-lg font-semibold text-blue-700 mb-1 group-hover:text-blue-800">
                   Digital Security Engineered for Digital-Age Education
                 </h3>
-                <p class="text-gray-600 mb-2">Fortinet</p>
-                <p class="text-gray-500 text-sm mb-4">Issued: November 2024</p>
+                <p class="text-gray-600 text-sm mb-1">Fortinet</p>
+                <p class="text-gray-500 text-xs mb-3">Issued: November 2024</p>
                 <div class="flex flex-wrap gap-2">
-                  <span
-                    class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                    >Networking</span
-                  >
-                  <span
-                    class="text-xs bg-green-50 text-green-600 px-2 py-1 rounded"
-                    >Digital Security</span
-                  >
+                  <span class="bg-sky-100 text-sky-700 px-2.5 py-1 text-xs font-medium rounded-full">Networking</span>
+                  <span class="bg-green-100 text-green-700 px-2.5 py-1 text-xs font-medium rounded-full">Digital Security</span>
                 </div>
               </div>
             </div>
-            <div class="mt-4 text-blue-600 text-sm">View on LinkedIn</div>
+            <p class="mt-4 text-sm text-blue-600 group-hover:text-blue-800 font-medium">View Credential <span class="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></p>
           </a>
 
-          <!-- KKU Certificate -->
-          <a
-            href="https://www.linkedin.com/in/witchakorn-boonprakom"
-            target="_blank"
-            class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 card-hover cursor-pointer"
-          >
+          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-200 block group">
             <div class="flex items-start space-x-4">
-              <img
-                src="./images/JwrjCrXn-sTF9-FOo5-oQ6cFVRP.jpg"
-                alt="KKU"
-                class="w-12 h-12 rounded object-cover object-center"
-              />
+              <img src="./images/JwrjCrXn-sTF9-FOo5-oQ6cFVRP.jpg" alt="KKU Logo" class="w-12 h-12 rounded object-contain flex-shrink-0" loading="lazy"/>
               <div>
-                <h3 class="text-xl font-semibold mb-2">
+                <h3 class="text-lg font-semibold text-blue-700 mb-1 group-hover:text-blue-800">
                   Data Science and Applications
                 </h3>
-                <p class="text-gray-600 mb-2">Khon Kaen University</p>
-                <p class="text-gray-500 text-sm mb-4">
-                  Intensive Training Program
-                </p>
+                <p class="text-gray-600 text-sm mb-1">Khon Kaen University</p>
+                <p class="text-gray-500 text-xs mb-3">Intensive Training Program</p>
                 <div class="flex flex-wrap gap-2">
-                  <span
-                    class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded"
-                    >Data Science</span
-                  >
-                  <span
-                    class="text-xs bg-purple-50 text-purple-600 px-2 py-1 rounded"
-                    >AI</span
-                  >
+                  <span class="bg-purple-100 text-purple-700 px-2.5 py-1 text-xs font-medium rounded-full">Data Science</span>
+                  <span class="bg-pink-100 text-pink-700 px-2.5 py-1 text-xs font-medium rounded-full">AI</span>
                 </div>
               </div>
             </div>
-            <div class="mt-4 text-blue-600 text-sm">View on LinkedIn</div>
+             <p class="mt-4 text-sm text-blue-600 group-hover:text-blue-800 font-medium">View Credential <span class="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></p>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-24 bg-white">
+    <section id="skills" class="py-20 md:py-24 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Skills
-        </h2>
-        <div class="space-y-16">
-          <!-- Core Technologies -->
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Technical Skills</h2>
+        </header>
+        <div class="space-y-12">
           <div>
-            <h3 class="text-2xl font-semibold mb-8">Core Technologies</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Go (Fiber, gRPC, Gin, Gorm)</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+            <h3 class="text-xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-200">Core Technologies</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
+              <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-700">Go (Fiber, gRPC, Gin, Gorm)</span>
+                  <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span>
                 </div>
               </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Python (Flask, FastAPI, YOLO)</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+               <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-700">Python (Flask, FastAPI, YOLO)</span>
+                  <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span>
                 </div>
               </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Java (JavaFX, SpringBoot)</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+              <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-700">Java (JavaFX, SpringBoot)</span>
+                  <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span>
                 </div>
               </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">SQL (MySQL, MariaDB, Oracle)</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+              <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-700">SQL (MySQL, MariaDB, Oracle)</span>
+                  <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span>
                 </div>
               </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">PHP (Laravel)</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Intermediate</span
-                  >
+              <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-700">PHP (Laravel)</span>
+                  <span class="text-xs font-semibold text-green-600 bg-green-100 px-2.5 py-1 rounded-full">Intermediate</span>
                 </div>
               </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">JavaScript (Next.js, WebRTC)</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Intermediate</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">C / C++</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Intermediate</span
-                  >
+              <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center">
+                  <span class="font-medium text-gray-700">JavaScript (Next.js, WebRTC)</span>
+                  <span class="text-xs font-semibold text-green-600 bg-green-100 px-2.5 py-1 rounded-full">Intermediate</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Technical Skills -->
           <div>
-            <h3 class="text-2xl font-semibold mb-8">Technical Skills</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Back-End Development</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+            <h3 class="text-xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-200">Expertise Areas</h3>
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-center"> <span class="font-medium text-gray-700">Back-End Development</span> <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span></div>
                 </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">AI & Machine Learning</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-center"> <span class="font-medium text-gray-700">AI & Machine Learning</span> <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span></div>
                 </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">NLP & Text Processing</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-center"> <span class="font-medium text-gray-700">NLP & Text Processing</span> <span class="text-xs font-semibold text-blue-600 bg-blue-100 px-2.5 py-1 rounded-full">Advanced</span></div>
                 </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Object Detection</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Networking</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Intermediate</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Front-End Development</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Intermediate</span
-                  >
-                </div>
-              </div>
-            </div>
+             </div>
           </div>
 
-          <!-- Tools & Platforms -->
           <div>
-            <h3 class="text-2xl font-semibold mb-8">Tools & Platforms</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">GitHub</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Docker</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Postman</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Azure</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">Google Cloud</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Advanced</span
-                  >
-                </div>
-              </div>
-
-              <div
-                class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div class="flex items-center gap-3">
-                  <span class="font-medium">GitLab</span>
-                  <span class="ml-auto text-blue-600 font-semibold"
-                    >Intermediate</span
-                  >
-                </div>
-              </div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-6 pb-2 border-b-2 border-blue-200">Tools & Platforms</h3>
+            <div class="flex flex-wrap gap-3">
+                <span class="skill-badge">GitHub</span><span class="skill-badge">Docker</span><span class="skill-badge">Postman</span>
+                <span class="skill-badge bg-yellow-100 text-yellow-700">Azure</span> <span class="skill-badge bg-red-100 text-red-700">Google Cloud</span>
+                <span class="skill-badge bg-orange-100 text-orange-700">GitLab</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-gray-50">
+    <section id="contact" class="py-20 md:py-24 bg-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Contact
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <a
-            href="mailto:witchakorn.b@kkumail.com"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <svg
-              class="w-8 h-8 mx-auto mb-4 text-blue-600 group-hover:text-blue-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            <p class="text-gray-600 group-hover:text-blue-600">
-              witchakorn.b@kkumail.com
-            </p>
+        <header class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Get In Touch</h2>
+            <p class="mt-3 text-lg text-gray-600 max-w-xl mx-auto">Feel free to reach out for collaborations or just a friendly chat.</p>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <a href="mailto:witchakorn.b@kkumail.com" class="bg-white p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
+            <svg class="w-10 h-10 mx-auto mb-3 text-blue-600 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/> </svg>
+            <p class="text-gray-700 group-hover:text-blue-600 font-medium transition-colors">witchakorn.b@kkumail.com</p>
           </a>
-          <a
-            href="tel:+66922561042"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <svg
-              class="w-8 h-8 mx-auto mb-4 text-blue-600 group-hover:text-blue-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
-            <p class="text-gray-600 group-hover:text-blue-600">092-256-1042</p>
+          <a href="tel:+66922561042" class="bg-white p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
+            <svg class="w-10 h-10 mx-auto mb-3 text-blue-600 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/> </svg>
+            <p class="text-gray-700 group-hover:text-blue-600 font-medium transition-colors">092-256-1042</p>
           </a>
-          <a
-            href="https://maps.app.goo.gl/aSiHx2PRuaMoBJhR8"
-            target="_blank"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <svg
-              class="w-8 h-8 mx-auto mb-4 text-blue-600 group-hover:text-blue-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            <p class="text-gray-600 group-hover:text-blue-600">
-              Khon Kaen University, Thailand
-            </p>
+          <a href="https://www.google.com/maps/place/Khon+Kaen+University" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
+            <svg class="w-10 h-10 mx-auto mb-3 text-blue-600 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/> </svg>
+            <p class="text-gray-700 group-hover:text-blue-600 font-medium transition-colors">Khon Kaen, Thailand</p>
           </a>
         </div>
 
-        <!-- Social Links -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <a
-            href="https://medium.com/@witchakorn.bo"
-            target="_blank"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/medium.svg"
-              class="w-8 h-8 mx-auto mb-4 text-gray-700"
-              alt="Medium"
-            />
-            <p class="text-gray-600 group-hover:text-blue-600">Medium</p>
+        <div class="flex justify-center space-x-6 md:space-x-8 mt-10">
+          <a href="https://medium.com/@witchakorn.bo" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600 social-link-hover" aria-label="Medium Profile">
+            <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M2.846 6.887c.03-.295-.083-.586-.303-.784l-2.24-2.7v-.403h6.958l5.378 11.795 4.728-11.795h6.633v.403l-1.916 1.837c-.165.126-.247.333-.213.538v13.498c-.034.204.048.411.213.537l1.871 1.837v.403h-9.412v-.403l1.939-1.882c.19-.19.19-.246.19-.537v-10.91l-5.389 13.688h-.728l-6.275-13.688v9.174c-.052.385.076.774.347 1.052l2.521 3.058v.404h-7.148v-.404l2.521-3.058c.27-.279.39-.67.325-1.052v-10.608z"/></svg>
           </a>
-          <a
-            href="https://github.com/witchakornb"
-            target="_blank"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/github.svg"
-              class="w-8 h-8 mx-auto mb-4"
-              alt="GitHub"
-            />
-            <p class="text-gray-600 group-hover:text-blue-600">GitHub</p>
+          <a href="https://github.com/witchakornb" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600 social-link-hover" aria-label="GitHub Profile">
+            <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           </a>
-          <a
-            href="https://gitlab.com/witchakornb"
-            target="_blank"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/gitlab.svg"
-              class="w-8 h-8 mx-auto mb-4"
-              alt="GitLab"
-            />
-            <p class="text-gray-600 group-hover:text-blue-600">GitLab</p>
+          <a href="https://gitlab.com/witchakornb" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600 social-link-hover" aria-label="GitLab Profile">
+             <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/></svg>
           </a>
-          <a
-            href="https://www.linkedin.com/in/witchakorn-boonprakom"
-            target="_blank"
-            class="bg-white p-6 rounded-xl shadow-sm card-hover text-center group"
-          >
-            <img
-              src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/linkedin.svg"
-              class="w-8 h-8 mx-auto mb-4"
-              alt="LinkedIn"
-            />
-            <p class="text-gray-600 group-hover:text-blue-600">LinkedIn</p>
+          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-600 social-link-hover" aria-label="LinkedIn Profile">
+            <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
           </a>
         </div>
       </div>
     </section>
 
-    <footer class="bg-white border-t border-gray-200 py-12">
+    <footer class="bg-white border-t border-gray-200 py-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-gray-600">
-          &copy; 2025 Witchakorn Boonprakom. All rights reserved.
+        <p class="text-gray-600 text-sm">
+          &copy; <span id="currentYear">2025</span> Witchakorn Boonprakom. All rights reserved.
+        </p>
+        <p class="text-xs text-gray-400 mt-1">
+            Built with Tailwind CSS &amp; a passion for code.
         </p>
       </div>
     </footer>
@@ -1236,47 +620,112 @@
       // Mobile menu toggle
       const menuButton = document.getElementById("mobile-menu-button");
       const mobileMenu = document.getElementById("mobile-menu");
+      const iconMenu = document.getElementById("icon-menu");
+      const iconClose = document.getElementById("icon-close");
+      const mainNav = document.getElementById("main-nav");
 
       menuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
+        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+        menuButton.setAttribute('aria-expanded', !isExpanded);
+        iconMenu.classList.toggle("hidden");
+        iconMenu.classList.toggle("block");
+        iconClose.classList.toggle("hidden");
+        iconClose.classList.toggle("block");
+        
+        if (mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.remove('hidden');
+            // Force reflow for transition
+            requestAnimationFrame(() => {
+                mobileMenu.classList.remove('max-h-0', 'opacity-0');
+                mobileMenu.classList.add('max-h-screen', 'opacity-100'); // Use a sufficiently large max-height
+            });
+        } else {
+            mobileMenu.classList.remove('max-h-screen', 'opacity-100');
+            mobileMenu.classList.add('max-h-0', 'opacity-0');
+            // Listen for transition end to add 'hidden' back, for accessibility and layout
+            mobileMenu.addEventListener('transitionend', () => {
+                mobileMenu.classList.add('hidden');
+            }, { once: true });
+        }
       });
 
       // Close mobile menu when clicking a link
-      const mobileLinks = mobileMenu.querySelectorAll("a");
+      const mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
       mobileLinks.forEach((link) => {
         link.addEventListener("click", () => {
-          mobileMenu.classList.add("hidden");
+          menuButton.setAttribute('aria-expanded', 'false');
+          iconMenu.classList.remove("hidden");
+          iconMenu.classList.add("block");
+          iconClose.classList.remove("block");
+          iconClose.classList.add("hidden");
+          mobileMenu.classList.remove('max-h-screen', 'opacity-100');
+          mobileMenu.classList.add('max-h-0', 'opacity-0');
+           mobileMenu.addEventListener('transitionend', () => {
+                mobileMenu.classList.add('hidden');
+            }, { once: true });
         });
       });
 
       // Navbar scroll effect
-      const nav = document.querySelector("nav");
       window.addEventListener("scroll", () => {
-        if (window.scrollY > 0) {
-          nav.classList.add("shadow-sm");
+        if (window.scrollY > 50) { // A bit more scroll before shadow appears
+          mainNav.classList.add("shadow-lg");
         } else {
-          nav.classList.remove("shadow-sm");
+          mainNav.classList.remove("shadow-lg");
         }
       });
 
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            const headerOffset = 80;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition =
-              elementPosition + window.pageYOffset - headerOffset;
+      // Smooth scrolling for anchor links & Active Nav Link
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('section[id]');
+      const headerOffset = 80; // Adjust to your nav height
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth",
-            });
+      navLinks.forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              const targetId = this.getAttribute('href');
+              const targetElement = document.querySelector(targetId);
+              if (targetElement) {
+                  const elementPosition = targetElement.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                  window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                  });
+
+                  // For mobile, close menu
+                  if (mobileMenu.classList.contains('max-h-screen')) {
+                     menuButton.click();
+                  }
+              }
+          });
+      });
+      
+      // Active Nav Link highlighting on scroll
+      function highlightNavLink() {
+        let currentSectionId = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - headerOffset - 50; // Added extra offset
+          if (window.pageYOffset >= sectionTop) {
+            currentSectionId = section.getAttribute('id');
           }
         });
-      });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active', 'text-blue-600', 'font-semibold'); // Ensure font-semibold only on active
+          link.classList.add('text-gray-600', 'font-medium'); 
+          if (link.getAttribute('href') === `#${currentSectionId}`) {
+            link.classList.add('active', 'text-blue-600', 'font-semibold');
+            link.classList.remove('text-gray-600','font-medium');
+          }
+        });
+      }
+      window.addEventListener('scroll', highlightNavLink);
+      window.addEventListener('load', highlightNavLink); // Highlight on page load
+
+      // Dynamic Year in Footer
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
