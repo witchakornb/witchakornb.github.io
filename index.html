@@ -79,6 +79,64 @@
       .mobile-menu-transition {
         transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
       }
+      
+      /* PDF Resume Modal Styles */
+      .modal-enter {
+        opacity: 1;
+        transform: scale(1);
+      }
+      
+      .modal-exit {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideUp {
+        from { 
+          opacity: 0;
+          transform: translateY(20px) scale(0.95);
+        }
+        to { 
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      
+      .resume-modal-content {
+        animation: slideUp 0.3s ease-out;
+      }
+      
+      /* Custom scrollbar for PDF viewer */
+      .resume-viewer::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      .resume-viewer::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+      
+      .resume-viewer::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+      }
+      
+      .resume-viewer::-webkit-scrollbar-thumb:hover {
+        background: #a1a1a1;
+      }
+      
+      /* Responsive design for modal */
+      @media (max-width: 768px) {
+        .resume-modal-content {
+          margin: 1rem;
+          max-height: calc(100vh - 2rem);
+        }
+      }
     </style>
   </head>
 
@@ -149,6 +207,15 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884zM18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" clip-rule="evenodd" /></svg>
             <span>Contact Me</span>
           </a>
+          <button
+            onclick="openResumeModal()"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>View Resume</span>
+          </button>
           <a
             href="#projects"
             class="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-blue-500 hover:bg-blue-50 hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5"
@@ -221,7 +288,15 @@
         <header class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Experience</h2>
         </header>
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+            <h3 class="text-xl font-semibold text-blue-700 mb-1">Software Developer</h3>
+            <p class="text-sm text-gray-500 mb-3">Apr 2025 - Present  |  Apppi Co., Ltd.</p>
+            <div class="text-gray-700 mb-4">
+              <p class="mb-3"><span class="font-semibold">Android Application:</span> Enhanced a legacy POS system by adding a points redemption feature, enabling members to exchange points for rewards. Built using Kotlin with Jetpack Compose.</p>
+              <p><span class="font-semibold">Web Application:</span> Developed a Content Management System (CMS), including a Go (Gin) back-end with Clean Architecture, a Vite + React admin panel, and a Next.js user-facing site, delivering a fast, scalable, and responsive web application.</p>
+            </div>
+          </div>
           <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
             <h3 class="text-xl font-semibold text-blue-700 mb-1">Teacher Assistant</h3>
             <p class="text-sm text-gray-500 mb-3">June 2023 - Present  |  Khon Kaen University</p>
@@ -740,8 +815,137 @@
       window.addEventListener('scroll', highlightNavLink);
       window.addEventListener('load', highlightNavLink); // Highlight on page load
 
+      // PDF Resume Modal Functions
+      function openResumeModal() {
+        const modal = document.getElementById('resumeModal');
+        const modalContent = modal.querySelector('.resume-modal-content');
+        const loading = document.getElementById('resumeLoading');
+        const iframe = document.getElementById('resumeFrame');
+        
+        // Show modal with fade in
+        modal.classList.remove('hidden');
+        modal.classList.remove('opacity-0');
+        modal.classList.add('opacity-100');
+        
+        // Show modal content with scale animation
+        setTimeout(() => {
+          modalContent.classList.remove('scale-95');
+          modalContent.classList.add('scale-100');
+        }, 50);
+        
+        // Load PDF in iframe
+        iframe.src = './file/resume_witchakorn_boonprakom.pdf';
+        
+        // Hide loading spinner after iframe loads
+        iframe.onload = function() {
+          setTimeout(() => {
+            loading.style.display = 'none';
+          }, 500);
+        };
+        
+        // Handle iframe load error
+        iframe.onerror = function() {
+          loading.innerHTML = '<div class="text-center"><p class="text-red-600">Error loading resume. Please try downloading instead.</p></div>';
+        };
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeResumeModal() {
+        const modal = document.getElementById('resumeModal');
+        const modalContent = modal.querySelector('.resume-modal-content');
+        const loading = document.getElementById('resumeLoading');
+        const iframe = document.getElementById('resumeFrame');
+        
+        // Hide modal with fade out
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        
+        // Hide modal content with scale animation
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        
+        // Hide modal completely after animation
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          
+          // Reset iframe and loading state
+          iframe.src = '';
+          loading.style.display = 'flex';
+          loading.innerHTML = `
+            <div class="text-center">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p class="text-gray-600">Loading resume...</p>
+            </div>
+          `;
+        }, 300);
+        
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+      }
+      
+      // Close modal when clicking outside
+      document.getElementById('resumeModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeResumeModal();
+        }
+      });
+      
+      // Close modal with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const modal = document.getElementById('resumeModal');
+          if (!modal.classList.contains('hidden')) {
+            closeResumeModal();
+          }
+        }
+      });
+
       // Dynamic Year in Footer
       document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
+
+    <!-- PDF Resume Modal -->
+    <div id="resumeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity duration-300 opacity-0">
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="resume-modal-content bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300">
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-6 border-b border-gray-200">
+            <h3 class="text-2xl font-bold text-gray-900">Resume Preview</h3>
+            <div class="flex items-center space-x-4">
+              <a id="downloadResume" href="./file/resume_witchakorn_boonprakom.pdf" download="Witchakorn_Resume.pdf" 
+                 class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>Download</span>
+              </a>
+              <button onclick="closeResumeModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          <!-- PDF Viewer Container -->
+          <div class="flex-1 p-6 bg-gray-50 overflow-hidden">
+            <div class="resume-viewer w-full h-full bg-white rounded-lg shadow-inner border border-gray-200 overflow-auto">
+              <iframe id="resumeFrame" src="" class="w-full h-full min-h-[600px]" frameborder="0"></iframe>
+            </div>
+          </div>
+          
+          <!-- Loading State -->
+          <div id="resumeLoading" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center">
+            <div class="text-center">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p class="text-gray-600">Loading resume...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
