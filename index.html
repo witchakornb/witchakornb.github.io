@@ -10,47 +10,95 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
       :root {
-        --scroll-behavior: smooth; /* Fallback for html class */
+        --scroll-behavior: smooth;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f9fafb;
+        --bg-tertiary: #f3f4f6;
+        --text-primary: #1f2937;
+        --text-secondary: #4b5563;
+        --text-tertiary: #6b7280;
+        --border-color: #e5e7eb;
+        --card-shadow: rgba(0, 0, 0, 0.1);
+        --gradient-from: #2563eb;
+        --gradient-to: #3b82f6;
+        --gradient-accent: #5eead4;
       }
+      
+      [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-tertiary: #94a3b8;
+        --border-color: #334155;
+        --card-shadow: rgba(0, 0, 0, 0.3);
+        --gradient-from: #3b82f6;
+        --gradient-to: #60a5fa;
+        --gradient-accent: #5eead4;
+      }
+      
       * {
         font-family: "Inter", sans-serif;
-        scroll-behavior: var(--scroll-behavior); /* Use CSS variable */
+        scroll-behavior: var(--scroll-behavior);
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       }
+      
+      body {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+      
       .gradient-text {
-        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 70%, #5eead4 100%);
+        background: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-to) 70%, var(--gradient-accent) 100%);
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
       .gradient-bg {
-        background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+        background: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
       }
       .gradient-bg-hover:hover {
-        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%); /* Darker on hover */
+        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
       }
       .card-hover {
         transition: all 0.3s ease-in-out;
+        background-color: var(--bg-primary);
+        border-color: var(--border-color);
       }
       .card-hover:hover {
         transform: translateY(-6px);
-        box-shadow: 0 12px 35px rgba(37, 99, 235, 0.15); /* Enhanced shadow */
+        box-shadow: 0 12px 35px var(--card-shadow);
       }
       .skill-badge {
-        background: rgba(59, 130, 246, 0.1); /* Blue-600 with 10% opacity */
-        color: #2563eb; /* Blue-600 */
-        padding: 0.25rem 0.75rem;   /* py-1 px-3 equivalent */
-        border-radius: 9999px;    /* rounded-full */
-        font-size: 0.75rem;       /* text-xs equivalent */
-        font-weight: 500;         /* font-medium */
+        background: rgba(59, 130, 246, 0.1);
+        color: #2563eb;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
         transition: all 0.3s ease;
         display: inline-block;
       }
+      
+      [data-theme="dark"] .skill-badge {
+        background: rgba(96, 165, 250, 0.2);
+        color: #60a5fa;
+      }
+      
       .skill-badge:hover {
-        background: #2563eb; /* Blue-600 */
+        background: #2563eb;
         color: white;
+      }
+      
+      [data-theme="dark"] .skill-badge:hover {
+        background: #60a5fa;
+        color: #0f172a;
       }
       .nav-link {
         position: relative;
-        padding-bottom: 4px; /* Space for underline */
+        padding-bottom: 4px;
+        color: var(--text-secondary);
       }
       .nav-link::after {
         content: "";
@@ -59,16 +107,20 @@
         left: 0;
         width: 0;
         height: 2px;
-        background: #2563eb; /* Blue-600 */
+        background: var(--gradient-from);
         transition: width 0.3s ease;
       }
       .nav-link:hover::after,
-      .nav-link.active::after { /* Style for active link */
+      .nav-link.active::after {
         width: 100%;
       }
       .hero-pattern {
         background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         background-attachment: fixed;
+      }
+      
+      [data-theme="dark"] .hero-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2360a5fa' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       }
       .social-link-hover {
         transition: transform 0.3s ease, color 0.3s ease;
@@ -121,13 +173,119 @@
         border-radius: 4px;
       }
       
+      [data-theme="dark"] .resume-viewer::-webkit-scrollbar-track {
+        background: #334155;
+      }
+      
       .resume-viewer::-webkit-scrollbar-thumb {
         background: #c1c1c1;
         border-radius: 4px;
       }
       
+      [data-theme="dark"] .resume-viewer::-webkit-scrollbar-thumb {
+        background: #64748b;
+      }
+      
       .resume-viewer::-webkit-scrollbar-thumb:hover {
         background: #a1a1a1;
+      }
+      
+      [data-theme="dark"] .resume-viewer::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      
+      /* Theme toggle button */
+      .theme-toggle {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        background: var(--bg-tertiary);
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid var(--border-color);
+      }
+      
+      .theme-toggle-slider {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      [data-theme="dark"] .theme-toggle-slider {
+        transform: translateX(30px);
+      }
+      
+      .theme-icon {
+        width: 14px;
+        height: 14px;
+        color: white;
+      }
+      
+      /* Override Tailwind colors with CSS variables */
+      .bg-white {
+        background-color: var(--bg-primary) !important;
+      }
+      
+      .bg-gray-50 {
+        background-color: var(--bg-secondary) !important;
+      }
+      
+      .bg-gray-100 {
+        background-color: var(--bg-secondary) !important;
+      }
+      
+      .text-gray-500 {
+        color: var(--text-tertiary) !important;
+      }
+      
+      .text-gray-600 {
+        color: var(--text-tertiary) !important;
+      }
+      
+      .text-gray-700 {
+        color: var(--text-secondary) !important;
+      }
+      
+      .text-gray-800 {
+        color: var(--text-primary) !important;
+      }
+      
+      .border-gray-200 {
+        border-color: var(--border-color) !important;
+      }
+      
+      .bg-blue-50 {
+        background-color: rgba(59, 130, 246, 0.08) !important;
+      }
+      
+      [data-theme="dark"] .bg-blue-50 {
+        background-color: rgba(96, 165, 250, 0.1) !important;
+      }
+      
+      .border-blue-200 {
+        border-color: rgba(59, 130, 246, 0.3) !important;
+      }
+      
+      [data-theme="dark"] .border-blue-200 {
+        border-color: rgba(96, 165, 250, 0.3) !important;
+      }
+      
+      /* Card backgrounds in dark mode */
+      [data-theme="dark"] .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+      }
+      
+      [data-theme="dark"] .shadow-xl {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
       }
       
       /* Responsive design for modal */
@@ -140,24 +298,34 @@
     </style>
   </head>
 
-  <body class="bg-gray-100 text-gray-800 antialiased">
-    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-200/80 z-50 transition-shadow duration-300" id="main-nav">
+  <body class="antialiased">
+    <nav class="fixed top-0 w-full backdrop-blur-xl border-b z-50 transition-all duration-300" id="main-nav" 
+         style="background-color: rgba(255, 255, 255, 0.8); border-color: var(--border-color);">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
           <a href="#" class="text-2xl font-bold gradient-text tracking-tight hover:opacity-80 transition-opacity duration-300">WB</a>
 
           <div class="hidden md:flex items-center space-x-8">
-            <a href="#about" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">About</a>
-            <a href="#experience" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Experience</a>
-            <a href="#competitions" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Competitions</a>
-            <a href="#live-projects" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Live Projects</a>
-            <a href="#projects" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Projects</a>
-            <a href="#certifications" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Certifications</a>
-            <a href="#skills" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Skills</a>
-            <a href="#contact" class="nav-link text-gray-600 hover:text-blue-600 transition-colors font-medium">Contact</a>
+            <a href="#about" class="nav-link hover:text-blue-600 transition-colors font-medium">About</a>
+            <a href="#experience" class="nav-link hover:text-blue-600 transition-colors font-medium">Experience</a>
+            <a href="#competitions" class="nav-link hover:text-blue-600 transition-colors font-medium">Competitions</a>
+            <a href="#live-projects" class="nav-link hover:text-blue-600 transition-colors font-medium">Live Projects</a>
+            <a href="#projects" class="nav-link hover:text-blue-600 transition-colors font-medium">Projects</a>
+            <a href="#certifications" class="nav-link hover:text-blue-600 transition-colors font-medium">Certifications</a>
+            <a href="#skills" class="nav-link hover:text-blue-600 transition-colors font-medium">Skills</a>
+            <a href="#contact" class="nav-link hover:text-blue-600 transition-colors font-medium">Contact</a>
+            
+            <!-- Theme Toggle Button -->
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+              <div class="theme-toggle-slider">
+                <svg class="theme-icon sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+            </button>
           </div>
 
-          <button class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none" id="mobile-menu-button" aria-expanded="false" aria-controls="mobile-menu">
+          <button class="md:hidden focus:outline-none" id="mobile-menu-button" aria-expanded="false" aria-controls="mobile-menu" style="color: var(--text-secondary);">
             <span class="sr-only">Open main menu</span>
             <svg class="w-6 h-6 block" id="icon-menu" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -169,21 +337,33 @@
         </div>
       </div>
 
-      <div class="hidden md:hidden mobile-menu-transition max-h-0 opacity-0 overflow-hidden" id="mobile-menu">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-b border-gray-200 shadow-lg">
-          <a href="#about" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">About</a>
-          <a href="#experience" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Experience</a>
-          <a href="#competitions" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Competitions</a>
-          <a href="#live-projects" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Live Projects</a>
-          <a href="#projects" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Projects</a>
-          <a href="#certifications" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Certifications</a>
-          <a href="#skills" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Skills</a>
-          <a href="#contact" class="mobile-nav-link block px-3 py-2 text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors">Contact</a>
+      <div class="hidden md:hidden mobile-menu-transition max-h-0 opacity-0 overflow-hidden" id="mobile-menu" style="background-color: var(--bg-primary); border-color: var(--border-color);">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-b shadow-lg">
+          <a href="#about" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">About</a>
+          <a href="#experience" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Experience</a>
+          <a href="#competitions" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Competitions</a>
+          <a href="#live-projects" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Live Projects</a>
+          <a href="#projects" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Projects</a>
+          <a href="#certifications" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Certifications</a>
+          <a href="#skills" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Skills</a>
+          <a href="#contact" class="mobile-nav-link block px-3 py-2 text-base font-medium rounded-md transition-colors" style="color: var(--text-secondary);">Contact</a>
+          
+          <!-- Mobile Theme Toggle -->
+          <div class="px-3 py-2 flex items-center justify-between">
+            <span class="text-base font-medium" style="color: var(--text-secondary);">Dark Mode</span>
+            <button class="theme-toggle" id="mobile-theme-toggle" aria-label="Toggle dark mode">
+              <div class="theme-toggle-slider">
+                <svg class="theme-icon sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </nav>
 
-    <section class="pt-32 pb-20 md:pt-40 md:pb-28 hero-pattern bg-gray-50">
+    <section class="pt-32 pb-20 md:pt-40 md:pb-28 hero-pattern" style="background-color: var(--bg-secondary);">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="mb-8">
           <img
@@ -196,7 +376,7 @@
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold gradient-text mb-5 tracking-tight">
           Witchakorn Boonprakom
         </h1>
-        <p class="text-lg md:text-xl text-gray-700 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p class="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed" style="color: var(--text-secondary);">
           Computer Science Student at Khon Kaen University | Developer
         </p>
         <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-5">
@@ -218,7 +398,8 @@
           </button>
           <a
             href="#projects"
-            class="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold border-2 border-blue-500 hover:bg-blue-50 hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5"
+            class="px-8 py-3 rounded-lg text-lg font-semibold border-2 hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center space-x-2.5"
+            style="background-color: var(--bg-primary); color: #2563eb; border-color: #2563eb;"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
@@ -229,13 +410,13 @@
       </div>
     </section>
 
-    <section id="about" class="py-20 md:py-24 bg-white">
+    <section id="about" class="py-20 md:py-24" style="background-color: var(--bg-primary);">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <header class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">About Me</h2>
         </header>
-        <div class="space-y-8 text-gray-700 text-lg leading-relaxed">
-          <p class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-sm">
+        <div class="space-y-8 text-lg leading-relaxed" style="color: var(--text-secondary);">
+          <p class="p-6 rounded-xl border shadow-sm" style="background-color: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.2);">
             I'm Witchakorn Boonprakom, a Computer Science student at Khon Kaen
             University passionate about software development. My expertise
             includes Go, Python, and Java, with hands-on experience in Spring
@@ -243,24 +424,10 @@
             like Azure and Google Cloud to build more scalable solutions.
           </p>
 
-          <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 mt-10">
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-              <h3 class="text-xl font-semibold mb-4 text-blue-700">Key Projects</h3>
-              <ul class="space-y-3 text-gray-600">
-                <li class="flex items-start">
-                  <svg class="w-5 h-5 text-blue-500 mr-2.5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/> </svg>
-                  Fertilizer Store Management System
-                </li>
-                <li class="flex items-start">
-                  <svg class="w-5 h-5 text-blue-500 mr-2.5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/> </svg>
-                  Real-Time Chat Application
-                </li>
-              </ul>
-            </div>
-
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
-              <h3 class="text-xl font-semibold mb-4 text-blue-700">Achievements</h3>
-              <ul class="space-y-3 text-gray-600">
+          <div class="mt-10">
+            <div class="p-6 rounded-xl shadow-lg border max-w-2xl mx-auto" style="background-color: var(--bg-primary); border-color: var(--border-color);">
+              <h3 class="text-xl font-semibold mb-4 text-blue-600">Achievements</h3>
+              <ul class="space-y-3" style="color: var(--text-tertiary);">
                 <li class="flex items-start">
                   <svg class="w-5 h-5 text-yellow-500 mr-2.5 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"> <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/> </svg>
                   1st Place - Thailand Health AI Datathon 2023
@@ -273,7 +440,7 @@
             </div>
           </div>
 
-          <p class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm">
+          <p class="p-6 rounded-xl border shadow-sm" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
             As an active member of the Google Developer Student Club, I'm
             committed to continuous learning and sharing knowledge with the tech
             community. I focus on exploring emerging technologies and
@@ -283,35 +450,35 @@
       </div>
     </section>
 
-    <section id="experience" class="py-20 md:py-24 bg-gray-100">
+    <section id="experience" class="py-20 md:py-24" style="background-color: var(--bg-secondary);">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Experience</h2>
         </header>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+          <div class="p-8 rounded-xl shadow-lg card-hover border" style="background-color: var(--bg-primary); border-color: var(--border-color);">
             <h3 class="text-xl font-semibold text-blue-700 mb-1">Software Developer</h3>
-            <p class="text-sm text-gray-500 mb-3">Apr 2025 - Present  |  Apppi Co., Ltd.</p>
-            <div class="text-gray-700 mb-4">
+            <p class="text-sm mb-3" style="color: var(--text-tertiary);">Apr 2025 - Present  |  Apppi Co., Ltd.</p>
+            <div class="mb-4" style="color: var(--text-secondary);">
               <p class="mb-3"><span class="font-semibold">Android Application:</span> Enhanced a legacy POS system by adding a points redemption feature, enabling members to exchange points for rewards. Built using Kotlin with Jetpack Compose.</p>
               <p><span class="font-semibold">Web Application:</span> Developed a Content Management System (CMS), including a Go (Gin) back-end with Clean Architecture, a Vite + React admin panel, and a Next.js user-facing site, delivering a fast, scalable, and responsive web application.</p>
             </div>
           </div>
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+          <div class="p-8 rounded-xl shadow-lg card-hover border" style="background-color: var(--bg-primary); border-color: var(--border-color);">
             <h3 class="text-xl font-semibold text-blue-700 mb-1">Teacher Assistant</h3>
-            <p class="text-sm text-gray-500 mb-3">June 2023 - Present  |  Khon Kaen University</p>
-            <p class="text-gray-700 mb-4">Supported instructors and students in various Computer Science courses:</p>
-            <ul class="mt-2 space-y-1.5 text-gray-600 list-disc list-inside">
+            <p class="text-sm mb-3" style="color: var(--text-tertiary);">June 2023 - Present  |  Khon Kaen University</p>
+            <p class="mb-4" style="color: var(--text-secondary);">Supported instructors and students in various Computer Science courses:</p>
+            <ul class="mt-2 space-y-1.5 list-disc list-inside" style="color: var(--text-tertiary);">
               <li>Natural Language Processing</li>
               <li>Artificial Intelligence</li>
               <li>Programming for Machine Learning</li>
               <li>Fundamental Computer Science</li>
             </ul>
           </div>
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+          <div class="p-8 rounded-xl shadow-lg card-hover border" style="background-color: var(--bg-primary); border-color: var(--border-color);">
             <h3 class="text-xl font-semibold text-blue-700 mb-1">Google Developer Student Clubs</h3>
-            <p class="text-sm text-gray-500 mb-3">Feb 2023 - May 2024  |  Khon Kaen University</p>
-            <p class="text-gray-700">
+            <p class="text-sm mb-3" style="color: var(--text-tertiary);">Feb 2023 - May 2024  |  Khon Kaen University</p>
+            <p style="color: var(--text-secondary);">
               Actively contributed to the tech community by creating and sharing knowledge on various tech-related topics through blog posts and workshops, aiming to make technology more accessible.
             </p>
           </div>
@@ -319,28 +486,28 @@
       </div>
     </section>
 
-    <section id="competitions" class="py-20 md:py-24 bg-white">
+    <section id="competitions" class="py-20 md:py-24" style="background-color: var(--bg-primary);">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Competitions</h2>
         </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+          <div class="p-8 rounded-xl shadow-lg card-hover border" style="background-color: var(--bg-primary); border-color: var(--border-color);">
             <h3 class="text-xl font-semibold text-blue-700 mb-1">THAILAND HEALTH AI CONFERENCE & DATATHON 2023</h3>
-            <p class="text-sm text-gray-500 mb-2">4th–6th Oct. 2023 | Khon Kaen University</p>
+            <p class="text-sm mb-2" style="color: var(--text-tertiary);">4th–6th Oct. 2023 | Khon Kaen University</p>
             <p class="font-semibold text-green-600 text-lg mb-3">1st Place Winner</p>
-            <p class="text-gray-700">
+            <p style="color: var(--text-secondary);">
               Collaborated with Team "Hypertension 2" to analyze over 100,000
               hypertension cases, identifying blood pressure variation (SD) as a
               key factor in cardiovascular outcomes using AI and data analysis
               techniques.
             </p>
           </div>
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200">
+          <div class="p-8 rounded-xl shadow-lg card-hover border" style="background-color: var(--bg-primary); border-color: var(--border-color);">
             <h3 class="text-xl font-semibold text-blue-700 mb-1">The International Collegiate Programming Contest (ICPC)</h3>
-            <p class="text-sm text-gray-500 mb-2">7th–8th Sep. 2024 | Chulalongkorn University</p>
+            <p class="text-sm mb-2" style="color: var(--text-tertiary);">7th–8th Sep. 2024 | Chulalongkorn University</p>
             <p class="font-semibold text-blue-600 text-lg mb-3">National Round Participant</p>
-            <p class="text-gray-700">
+            <p style="color: var(--text-secondary);">
               Participated in the National Round of ICPC competition, enhancing
               skills in algorithm design, problem-solving, and teamwork under
               time constraints.
@@ -357,7 +524,7 @@
             <p class="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">Interactive tools I've built. Try them out!</p>
         </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200 flex flex-col">
+          <div class="p-8 rounded-xl shadow-lg card-hover border border-gray-200 flex flex-col">
             <h3 class="text-xl font-semibold text-blue-700 mb-2">Smart Price Comparator</h3>
             <p class="text-gray-700 mb-6 flex-grow">
               A tool for comparing product prices to help users find the best
@@ -375,7 +542,7 @@
               </svg>
             </a>
           </div>
-          <div class="bg-white p-8 rounded-xl shadow-lg card-hover border border-gray-200 flex flex-col">
+          <div class="p-8 rounded-xl shadow-lg card-hover border border-gray-200 flex flex-col">
             <h3 class="text-xl font-semibold text-blue-700 mb-2">24 Game Solver</h3>
             <p class="text-gray-700 mb-6 flex-grow">
               An application that solves the 24 Game by calculating possible
@@ -397,14 +564,14 @@
       </div>
     </section>
 
-    <section id="projects" class="py-20 md:py-24 bg-white">
+    <section id="projects" class="py-20 md:py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <header class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Projects Showcase</h2>
                 <p class="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">A selection of my technical projects and contributions.</p>
             </header>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                <div class="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
                     <div class="p-6 flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-semibold text-blue-700">Student Attendance</h3>
@@ -422,7 +589,7 @@
                     <!-- No external link provided for this project in original -->
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                <div class="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
                     <div class="p-6 flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-semibold text-blue-700">Focus Space Online</h3>
@@ -445,7 +612,7 @@
                     </div>
                 </div>
 
-                 <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                 <div class="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
                     <div class="p-6 flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-semibold text-blue-700">Fertilizer Store System</h3>
@@ -463,7 +630,7 @@
                      <!-- No external link provided for this project in original -->
                 </div>
 
-                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                <div class="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
                     <div class="p-6 flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-semibold text-blue-700">Real-Time Chat</h3>
@@ -485,7 +652,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                <div class="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
                     <div class="p-6 flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-semibold text-blue-700">Register Management</h3>
@@ -507,7 +674,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
+                <div class="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden flex flex-col card-hover border border-gray-200">
                     <div class="p-6 flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-lg font-semibold text-blue-700">Vehicle Detection System</h3>
@@ -539,7 +706,7 @@
             <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Licenses & Certifications</h2>
         </header>
         <div class="grid md:grid-cols-2 gap-8">
-          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-200 block group">
+          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="p-6 rounded-xl shadow-lg card-hover border border-gray-200 block group">
             <div class="flex items-start space-x-4">
               <img src="./images/logo_fortinet.png" alt="Fortinet Logo" class="w-12 h-12 rounded object-contain flex-shrink-0" loading="lazy"/>
               <div>
@@ -557,7 +724,7 @@
             <p class="mt-4 text-sm text-blue-600 group-hover:text-blue-800 font-medium">View Credential <span class="inline-block transition-transform group-hover:translate-x-1">→</span></p>
           </a>
 
-          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-xl shadow-lg card-hover border border-gray-200 block group">
+          <a href="https://www.linkedin.com/in/witchakorn-boonprakom" target="_blank" rel="noopener noreferrer" class="p-6 rounded-xl shadow-lg card-hover border border-gray-200 block group">
             <div class="flex items-start space-x-4">
               <img src="./images/JwrjCrXn-sTF9-FOo5-oQ6cFVRP.jpg" alt="Khon Kaen University Logo" class="w-12 h-12 rounded object-contain flex-shrink-0" loading="lazy"/>
               <div>
@@ -578,7 +745,7 @@
       </div>
     </section>
 
-    <section id="skills" class="py-20 md:py-24 bg-white">
+    <section id="skills" class="py-20 md:py-24">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold gradient-text tracking-tight">Technical Skills</h2>
@@ -661,15 +828,15 @@
             <p class="mt-3 text-lg text-gray-600 max-w-xl mx-auto">Feel free to reach out for collaborations or just a friendly chat.</p>
         </header>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <a href="mailto:witchakorn.bo+careers@gmail.com" class="bg-white p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
+          <a href="mailto:witchakorn.bo+careers@gmail.com" class="p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
             <svg class="w-10 h-10 mx-auto mb-3 text-blue-600 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/> </svg>
             <p class="text-gray-700 group-hover:text-blue-600 font-medium transition-colors">witchakorn.bo+careers@gmail.com</p>
           </a>
-          <a href="tel:+66922561042" class="bg-white p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
+          <a href="tel:+66922561042" class="p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
             <svg class="w-10 h-10 mx-auto mb-3 text-blue-600 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/> </svg>
             <p class="text-gray-700 group-hover:text-blue-600 font-medium transition-colors">092-256-1042</p>
           </a>
-          <a href="https://www.google.com/maps/place/Khon+Kaen+University" target="_blank" rel="noopener noreferrer" class="bg-white p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
+          <a href="https://www.google.com/maps/place/Khon+Kaen+University" target="_blank" rel="noopener noreferrer" class="p-6 rounded-xl shadow-lg card-hover text-center group border border-gray-200">
             <svg class="w-10 h-10 mx-auto mb-3 text-blue-600 group-hover:text-blue-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/> </svg>
             <p class="text-gray-700 group-hover:text-blue-600 font-medium transition-colors">Khon Kaen, Thailand</p>
           </a>
@@ -692,7 +859,7 @@
       </div>
     </section>
 
-    <footer class="bg-white border-t border-gray-200 py-10">
+    <footer class="border-t border-gray-200 py-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p class="text-gray-600 text-sm">
           © <span id="currentYear">2025</span> Witchakorn Boonprakom. All rights reserved.
@@ -814,6 +981,43 @@
       }
       window.addEventListener('scroll', highlightNavLink);
       window.addEventListener('load', highlightNavLink); // Highlight on page load
+
+      // Dark Mode Toggle Function
+      function initThemeToggle() {
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        const nav = document.getElementById('main-nav');
+        
+        // Check for saved theme preference or default to 'light' mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+          updateNavStyles('dark');
+        }
+        
+        function toggleTheme() {
+          const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', theme);
+          localStorage.setItem('theme', theme);
+          updateNavStyles(theme);
+        }
+        
+        function updateNavStyles(theme) {
+          if (theme === 'dark') {
+            nav.style.backgroundColor = 'rgba(15, 23, 42, 0.8)';
+          } else {
+            nav.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+          }
+        }
+        
+        themeToggle?.addEventListener('click', toggleTheme);
+        mobileThemeToggle?.addEventListener('click', toggleTheme);
+      }
+      
+      // Initialize theme toggle on page load
+      window.addEventListener('DOMContentLoaded', initThemeToggle);
 
       // PDF Resume Modal Functions
       function openResumeModal() {
